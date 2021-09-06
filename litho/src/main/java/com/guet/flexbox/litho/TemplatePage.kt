@@ -2,6 +2,7 @@ package com.guet.flexbox.litho
 
 import android.content.Context
 import android.os.Looper
+import android.util.Log
 import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.WorkerThread
@@ -30,6 +31,7 @@ class TemplatePage @WorkerThread internal constructor(
     ) : EventTarget {
         override fun dispatchEvent(e: TemplateEvent<*>): Boolean {
             if (e is RefreshPageEvent) {
+                Log.d("tony", "start computeNewLayout-----------")
                 computeNewLayout()
                 return true
             }
@@ -45,7 +47,10 @@ class TemplatePage @WorkerThread internal constructor(
             builder.data,
             localTarget
     )
+    private val maxWidth = requireNotNull(builder.maxWidth)
+
     private val computeRunnable = Runnable {
+        Log.d("tony", "$this,computeRunnable start...")
         val oldWidth = size.width
         val oldHeight = size.height
         val com = LithoBuildTool.buildRoot<Component>(
@@ -54,9 +59,14 @@ class TemplatePage @WorkerThread internal constructor(
                 localTarget,
                 context
         )
+        val widthSpec = if (maxWidth > 0) {
+            SizeSpec.makeSizeSpec(maxWidth, SizeSpec.AT_MOST)
+        } else {
+            SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED)
+        }
         setRootAndSizeSpec(
                 com,
-                SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
+                widthSpec,
                 SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
                 size
         )
@@ -64,7 +74,10 @@ class TemplatePage @WorkerThread internal constructor(
             val hostingView = lithoView
                     as? HostingView
                     ?: return@Runnable
-            hostingView.post { hostingView.requestLayout() }
+            hostingView.post {
+                Log.d("tony", "hostingView.requestLayout")
+                hostingView.requestLayout()
+            }
         }
     }.apply { run() }
 
@@ -76,11 +89,11 @@ class TemplatePage @WorkerThread internal constructor(
         get() = size.height
 
     init {
-        super.setSizeSpec(
-                SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
-                SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
-                size
-        )
+//        super.setSizeSpec(
+//                SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
+//                SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
+//                size
+//        )
     }
 
     internal var outerTarget: EventTarget?
@@ -121,10 +134,13 @@ class TemplatePage @WorkerThread internal constructor(
         @JvmField
         @RestrictTo(RestrictTo.Scope.LIBRARY)
         internal var template: TemplateNode? = null
+
         @JvmSynthetic
         @JvmField
         @RestrictTo(RestrictTo.Scope.LIBRARY)
         internal var data: Any? = null
+
+        internal var maxWidth: Int = 0
 
         @Deprecated(
                 message = "use template() and data()",
@@ -163,11 +179,17 @@ class TemplatePage @WorkerThread internal constructor(
             return this
         }
 
+        fun maxWidth(width: Int): Builder {
+            this.maxWidth = width
+            return this
+        }
+
         @WorkerThread
         override fun build(): TemplatePage {
             super.layoutThreadHandler(ThreadPool.lithoHandler)
             super.withRoot(Row.create(context).build())
             isReconciliationEnabled(false)
+            maxWidth = 500
             return TemplatePage(this)
         }
     }

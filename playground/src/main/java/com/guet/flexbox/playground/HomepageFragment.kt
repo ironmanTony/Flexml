@@ -16,6 +16,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.NetworkUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.guet.flexbox.playground.model.AppLoader
@@ -84,6 +85,7 @@ class HomepageFragment : Fragment() {
         appBarLayout = view.findViewById(R.id.appbar)
         coordinator = view.findViewById(R.id.coordinator)
         feed = view.findViewById(R.id.feed)
+        feed.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         feed.setHasFixedSize(true)
         val foot = layoutInflater.inflate(
                 R.layout.load_more,
@@ -111,7 +113,7 @@ class HomepageFragment : Fragment() {
                     val app = requireContext().applicationContext
                     val activity = requireActivity()
                     AsyncTask.THREAD_POOL_EXECUTOR.execute {
-                        val list = AppLoader.loadMoreFeedItem(app, 10, false)
+                        val list = AppLoader.loadMoreFeedItem(app, 10, true)
                         if (!activity.isFinishing) {
                             activity.runOnUiThread {
                                 feedAdapter.addData(list)

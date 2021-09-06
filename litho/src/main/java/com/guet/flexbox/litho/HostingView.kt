@@ -2,6 +2,7 @@ package com.guet.flexbox.litho
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.annotation.RestrictTo
 import com.facebook.litho.ComponentTree
@@ -57,6 +58,7 @@ open class HostingView @JvmOverloads constructor(
 
     final override fun setClipToPadding(clipToPadding: Boolean) {
     }
+
     final override fun setPaddingRelative(start: Int, top: Int, end: Int, bottom: Int) {}
 
     final override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {}
@@ -79,12 +81,26 @@ open class HostingView @JvmOverloads constructor(
 
     final override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val page = templatePage
+        Log.d("tony", "hosting view start onMeasure:$this, page is null:${page == null}")
         if (page != null) {
             //fast path
-            super.onMeasure(
-                    SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
-                    SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED)
-            )
+//            val widthSpec = SizeSpec.getMode(widthMeasureSpec)
+//            val heightSpec = SizeSpec.getMode(heightMeasureSpec)
+//
+//            val parentWidthSpec = when (widthSpec) {
+//                SizeSpec.AT_MOST, SizeSpec.EXACTLY ->
+//                    SizeSpec.makeSizeSpec(SizeSpec.getSize(widthMeasureSpec), SizeSpec.AT_MOST)
+//                else -> SizeSpec.makeSizeSpec(SizeSpec.getSize(widthMeasureSpec), SizeSpec.UNSPECIFIED)
+//            }
+//            val parentHeightSpec = when (heightSpec) {
+//                SizeSpec.AT_MOST, SizeSpec.EXACTLY ->
+//                    SizeSpec.makeSizeSpec(SizeSpec.getSize(heightMeasureSpec), SizeSpec.AT_MOST)
+//                else -> SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED)
+//            }
+//            super.onMeasure(
+//                    SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED),
+//                    SizeSpec.makeSizeSpec(0, SizeSpec.UNSPECIFIED)
+//            )
             setMeasuredDimension(
                     View.getDefaultSize(
                             page.width,
@@ -95,6 +111,7 @@ open class HostingView @JvmOverloads constructor(
                             heightMeasureSpec
                     )
             )
+            Log.d("tony", "hosting view onMeasure, width:${page.width}, height:${page.height}")
         } else {
             //otherwise
             setMeasuredDimension(

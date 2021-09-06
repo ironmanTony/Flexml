@@ -30,7 +30,19 @@ class FlexBoxAdapter(
 
     override fun convert(helper: BaseViewHolder, item: TemplatePage) {
         val lithoView = helper.getView<HostingView>(R.id.litho)
-        lithoView.eventBus.subscribe(callback)
+        lithoView.eventBus.subscribe(object : EventHandler<ClickUrlEvent> {
+            override fun handleEvent(e: ClickUrlEvent): Boolean {
+                removeItem(mData, helper.layoutPosition)
+                helper.layoutPosition
+                return true
+            }
+        })
         lithoView.templatePage = item
+    }
+
+    private fun removeItem(mData: MutableList<TemplatePage>, layoutPosition: Int) {
+        mData.removeAt(layoutPosition)
+        notifyItemRemoved(layoutPosition)
+        notifyItemRangeChanged(layoutPosition, mData.size - layoutPosition, false)
     }
 }
