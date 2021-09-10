@@ -441,7 +441,7 @@ object BannerSpec {
                                 .child(rowBuilder)
                                 .build())
                         .build())
-                indicators.performIncrementalMount()
+                indicators.notifyVisibleBoundsChanged()
             }
         }
 
@@ -599,7 +599,7 @@ object BannerSpec {
                     }
                     val tree = trees[pos]
                     holder.lithoView.componentTree = tree
-                    holder.lithoView.performIncrementalMount(Rect(
+                    holder.lithoView.notifyVisibleBoundsChanged(Rect(
                             0, 0, measuredWidth, measuredHeight
                     ), false)
                 }

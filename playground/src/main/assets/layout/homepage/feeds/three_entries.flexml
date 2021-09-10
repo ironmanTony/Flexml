@@ -89,6 +89,7 @@
             marginLeft="7"
             marginRight="7"
             marginTop="8"
+            background="#FFFFFF"
             flexDirection="row">
             <Flex
                 flexDirection="column"
@@ -98,7 +99,7 @@
                 flexGrow="1">
                 <Image
                     borderRadius="10"
-                    scaleType="fitXY"
+                    scaleType="fitCenter"
                     flexGrow="1"
                     src="${images[0]}">
                 </Image>
@@ -117,8 +118,9 @@
                 flexGrow="1">
                 <Image
                     borderRadius="10"
-                    scaleType="fitXY"
+                    scaleType="fitCenter"
                     flexGrow="1"
+                    background="#7c4dff"
                     src="${images[1]}">
                 </Image>
                 <Text

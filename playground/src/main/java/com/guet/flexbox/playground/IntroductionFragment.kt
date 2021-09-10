@@ -46,7 +46,7 @@ class IntroductionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         scroller.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                host.performIncrementalMount()
+                host.notifyVisibleBoundsChanged()
             }
         })
         host.templatePage = homepageInfo.introduction

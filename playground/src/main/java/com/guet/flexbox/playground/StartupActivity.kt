@@ -34,17 +34,17 @@ class StartupActivity : AppCompatActivity() {
             permissions: Array<String>,
             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        for (result in grantResults) {
-            if (result == PackageManager.PERMISSION_DENIED) {
-                AlertDialog.Builder(this)
-                        .setTitle("提示")
-                        .setMessage("需要授予权限才能正常使用哦！")
-                        .setCancelable(false)
-                        .setNegativeButton("确认") { _: DialogInterface?, _: Int -> finish() }
-                        .show()
-                return
-            }
-        }
+//        for (result in grantResults) {
+//            if (result == PackageManager.PERMISSION_DENIED) {
+//                AlertDialog.Builder(this)
+//                        .setTitle("提示")
+//                        .setMessage("需要授予权限才能正常使用哦！")
+//                        .setCancelable(false)
+//                        .setNegativeButton("确认") { _: DialogInterface?, _: Int -> finish() }
+//                        .show()
+//                return
+//            }
+//        }
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

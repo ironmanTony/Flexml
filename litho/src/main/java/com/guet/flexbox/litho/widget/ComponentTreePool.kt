@@ -15,7 +15,9 @@ import java.util.concurrent.atomic.AtomicReference
 
 internal object ComponentTreePool : ComponentCallbacks, BuildKit {
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {}
+    override fun onConfigurationChanged(newConfig: Configuration) {
+
+    }
 
     @MainThread
     override fun onLowMemory() {

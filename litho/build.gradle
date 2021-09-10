@@ -1,20 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.guet.flexbox'
 
 ext {
-    lithoVersion = '0.33.0'
+    lithoVersion = '0.38.0'
 }
 
 android {
 
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -30,8 +29,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
 }
@@ -40,9 +42,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     //implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
@@ -56,8 +58,8 @@ dependencies {
 
     api project(':core')
 
-    kapt 'com.facebook.litho:litho-processor:0.33.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt "com.facebook.litho:litho-processor:${lithoVersion}"
+    kapt "com.github.bumptech.glide:compiler:4.11.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

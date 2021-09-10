@@ -156,7 +156,7 @@ class OverviewActivity : AppCompatActivity() {
             header = findViewById(R.id.header)
             header.configSlideChildTypeHeader()
             header.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
-                host.performIncrementalMount()
+                host.notifyVisibleBoundsChanged()
             }
             isLiveReload = findViewById(R.id.is_live_reload)
             isLiveReload.setOnClickListener {
