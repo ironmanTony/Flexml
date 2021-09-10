@@ -36,31 +36,40 @@ import android.graphics.drawable.GradientDrawable.Orientation as GradientOrienta
 object BannerSpec {
 
     @PropDefault
-    val timeSpan = 3000L
+    @JvmField
+    val timeSpan:Long = 3000L
 
     @get:JvmName(name = "getIsCircular")
     @PropDefault
+    @JvmField
     val isCircular: Boolean = true
 
     @PropDefault
+    @JvmField
     val orientation = Orientation.HORIZONTAL
 
     @PropDefault
+    @JvmField
     val indicatorEnable: Boolean = true
 
     @PropDefault
-    val indicatorHeight = 5.toPx()
+    @JvmField
+    val indicatorHeight:Int = 5.toPx()
 
     @PropDefault
-    val indicatorMargin = 2.5f.toPx()
+    @JvmField
+    val indicatorMargin:Int = 2.5f.toPx()
 
     @PropDefault
-    val indicatorSize = 5.toPx()
+    @JvmField
+    val indicatorSize:Int = 5.toPx()
 
     @PropDefault
+    @JvmField
     val indicatorSelected = Resource.drawable("indicator_light")
 
     @PropDefault
+    @JvmField
     val indicatorUnselected = Resource.drawable("indicator_black")
 
     @OnCreateMountContent

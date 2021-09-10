@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 group = 'com.guet.flexbox'
 
 ext {
-    lithoVersion = '0.38.0'
+    lithoVersion = '0.40.0'
 }
 
 android {
@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.facebook.yoga:proguard-annotations:1.16.0'
     api "com.facebook.litho:litho-core:${lithoVersion}"
     api "com.facebook.litho:litho-widget:${lithoVersion}"
-    implementation 'com.facebook.soloader:soloader:0.5.1'
+    implementation 'com.facebook.soloader:soloader:0.9.0'
 
     api project(':core')
 

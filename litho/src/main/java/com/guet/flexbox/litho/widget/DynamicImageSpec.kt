@@ -2,6 +2,7 @@ package com.guet.flexbox.litho.widget
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.transition.Transition
@@ -23,8 +24,11 @@ import com.guet.flexbox.litho.transforms.FastBlur
 object DynamicImageSpec {
 
     @PropDefault
-    val scaleType = ScaleType.FIT_XY
+    @JvmField
+    val scaleType:ImageView.ScaleType = ScaleType.FIT_XY
+
     @PropDefault
+    @JvmField
     val imageAspectRatio = 1f
 
     @OnCreateInitialState

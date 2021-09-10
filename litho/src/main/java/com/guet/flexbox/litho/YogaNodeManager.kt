@@ -22,7 +22,7 @@ internal object YogaNodeManager : BuildKit, NodeConfig.InternalYogaNodeFactory {
                 synchronized(entries) {
                     val instance = entries.remove(entry) ?: 0
                     if (instance != 0L) {
-                        YogaNative.jni_YGNodeFree(instance)
+                        YogaNative.jni_YGNodeFreeJNI(instance)
                     }
                 }
             }
