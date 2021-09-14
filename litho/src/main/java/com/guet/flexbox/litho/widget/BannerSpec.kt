@@ -44,9 +44,9 @@ object BannerSpec {
     @JvmField
     val isCircular: Boolean = true
 
-    @PropDefault
-    @JvmField
-    val orientation = Orientation.HORIZONTAL
+//    @PropDefault
+//    @JvmField
+//    var orientation = Orientation.HORIZONTAL
 
     @PropDefault
     @JvmField
@@ -182,7 +182,7 @@ object BannerSpec {
     fun onMount(
             c: ComponentContext,
             view: BannerLithoView,
-            @Prop(optional = true) orientation: Orientation,
+            @Prop(optional = true) orientation: Orientation?,
             @Prop(optional = true) isCircular: Boolean,
             @Prop(optional = true, resType = ResType.DIMEN_SIZE) indicatorHeight: Int,
             @Prop(optional = true, resType = ResType.DIMEN_SIZE) indicatorMargin: Int,
@@ -197,7 +197,7 @@ object BannerSpec {
             @State position: PagePosition
     ) {
         view.mount(
-                orientation,
+                if(orientation==null) Orientation.HORIZONTAL else orientation,
                 isCircular,
                 componentWidth,
                 componentHeight,

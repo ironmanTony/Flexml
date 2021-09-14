@@ -23,9 +23,9 @@ import com.guet.flexbox.litho.transforms.FastBlur
 )
 object DynamicImageSpec {
 
-    @PropDefault
-    @JvmField
-    val scaleType:ImageView.ScaleType = ScaleType.FIT_XY
+//    @PropDefault
+//    @JvmField
+//    val scaleType:ImageView.ScaleType = ScaleType.FIT_XY
 
     @PropDefault
     @JvmField
@@ -78,7 +78,7 @@ object DynamicImageSpec {
             @Prop(optional = true) model: Any,
             @Prop(optional = true) blurRadius: Float,
             @Prop(optional = true) blurSampling: Float,
-            @Prop(optional = true) scaleType: ScaleType,
+            @Prop(optional = true) scaleType: ScaleType?,
             @Prop(optional = true) leftTopRadius: Float,
             @Prop(optional = true) rightTopRadius: Float,
             @Prop(optional = true) rightBottomRadius: Float,
@@ -92,7 +92,7 @@ object DynamicImageSpec {
                 model,
                 blurRadius,
                 blurSampling,
-                scaleType,
+                if(scaleType==null)ScaleType.FIT_XY else scaleType,
                 leftTopRadius,
                 rightTopRadius,
                 rightBottomRadius,
