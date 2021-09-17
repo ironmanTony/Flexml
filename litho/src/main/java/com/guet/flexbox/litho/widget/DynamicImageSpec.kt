@@ -17,8 +17,8 @@ import com.guet.flexbox.litho.transforms.FastBlur
 
 
 @MountSpec(
-        isPureRender = true,
-        poolSize = 30
+    isPureRender = true,
+    poolSize = 30
 )
 object DynamicImageSpec {
 
@@ -32,8 +32,8 @@ object DynamicImageSpec {
 
     @OnCreateInitialState
     fun onCreateInitialState(
-            c: ComponentContext,
-            target: StateValue<DynamicImageTarget>
+        c: ComponentContext,
+        target: StateValue<DynamicImageTarget>
     ) {
         target.set(DynamicImageTarget())
     }
@@ -45,67 +45,70 @@ object DynamicImageSpec {
 
     @OnMeasure
     fun onMeasure(
-            c: ComponentContext,
-            layout: ComponentLayout,
-            widthSpec: Int,
-            heightSpec: Int,
-            size: Size,
-            @Prop(optional = true) imageAspectRatio: Float
+        c: ComponentContext,
+        layout: ComponentLayout,
+        widthSpec: Int,
+        heightSpec: Int,
+        size: Size,
+        @Prop(optional = true) imageAspectRatio: Float
     ) {
         MeasureUtils.measureWithAspectRatio(
-                widthSpec,
-                heightSpec,
-                imageAspectRatio,
-                size
+            widthSpec,
+            heightSpec,
+            imageAspectRatio,
+            size
         )
     }
 
     @OnBoundsDefined
     fun onBoundsDefined(
-            c: ComponentContext,
-            layout: ComponentLayout,
-            width: Output<Int>,
-            height: Output<Int>) {
+        c: ComponentContext,
+        layout: ComponentLayout,
+        width: Output<Int>,
+        height: Output<Int>
+    ) {
         width.set(layout.width - (layout.paddingLeft + layout.paddingRight))
         height.set(layout.height - (layout.paddingTop + layout.paddingBottom))
     }
 
     @OnMount
     fun onMount(
-            c: ComponentContext,
-            image: DynamicImageDrawable,
-            @Prop(optional = true) model: Any,
-            @Prop(optional = true) blurRadius: Float,
-            @Prop(optional = true) blurSampling: Float,
-            @Prop(optional = true) scaleType: ScaleType?,
-            @Prop(optional = true) leftTopRadius: Float,
-            @Prop(optional = true) rightTopRadius: Float,
-            @Prop(optional = true) rightBottomRadius: Float,
-            @Prop(optional = true) leftBottomRadius: Float,
-            @FromBoundsDefined width: Int,
-            @FromBoundsDefined height: Int,
-            @State target: DynamicImageTarget
+        c: ComponentContext,
+        image: DynamicImageDrawable,
+        @Prop(optional = true) model: Any,
+        @Prop(optional = true) blurRadius: Float,
+        @Prop(optional = true) blurSampling: Float,
+        @Prop(optional = true) scaleType: ScaleType?,
+        @Prop(optional = true) leftTopRadius: Float,
+        @Prop(optional = true) rightTopRadius: Float,
+        @Prop(optional = true) rightBottomRadius: Float,
+        @Prop(optional = true) leftBottomRadius: Float,
+        @Prop(optional = true) placeHolder: Drawable?,
+        @FromBoundsDefined width: Int,
+        @FromBoundsDefined height: Int,
+        @State target: DynamicImageTarget
     ) {
         image.mount(
-                target,
-                model,
-                blurRadius,
-                blurSampling,
-            scaleType ?: ScaleType.FIT_XY,
-                leftTopRadius,
-                rightTopRadius,
-                rightBottomRadius,
-                leftBottomRadius,
-                width,
-                height
+            target,
+            model,
+            blurRadius,
+            blurSampling,
+            scaleType ?: ScaleType.FIT_CENTER,
+            leftTopRadius,
+            rightTopRadius,
+            rightBottomRadius,
+            leftBottomRadius,
+            placeHolder,
+            width,
+            height
         )
     }
 
     @OnUnmount
     fun onUnmount(
-            c: ComponentContext,
-            image: DynamicImageDrawable,
-            @State target: DynamicImageTarget
+        c: ComponentContext,
+        image: DynamicImageDrawable,
+        @State target: DynamicImageTarget
     ) {
         image.unmount(target)
     }
@@ -129,8 +132,8 @@ object DynamicImageSpec {
         }
 
         override fun onResourceReady(
-                resource: BitmapDrawable,
-                transition: Transition<in BitmapDrawable>?
+            resource: BitmapDrawable,
+            transition: Transition<in BitmapDrawable>?
         ) {
             val wrapper = this.wrapper
             if (wrapper != null) {
@@ -141,33 +144,37 @@ object DynamicImageSpec {
     }
 
     class DynamicImageDrawable(
-            private val c: Context
+        private val c: Context
     ) : DrawableWrapper() {
 
         fun mount(
-                target: DynamicImageTarget,
-                @Prop(optional = true) model: Any,
-                @Prop(optional = true) blurRadius: Float,
-                @Prop(optional = true) blurSampling: Float,
-                @Prop(optional = true) scaleType: ScaleType,
-                @Prop(optional = true) leftTopRadius: Float,
-                @Prop(optional = true) rightTopRadius: Float,
-                @Prop(optional = true) rightBottomRadius: Float,
-                @Prop(optional = true) leftBottomRadius: Float,
-                @FromBoundsDefined width: Int,
-                @FromBoundsDefined height: Int
+            target: DynamicImageTarget,
+            model: Any,
+            blurRadius: Float,
+            blurSampling: Float,
+            scaleType: ScaleType,
+            leftTopRadius: Float,
+            rightTopRadius: Float,
+            rightBottomRadius: Float,
+            leftBottomRadius: Float,
+            placeHolder: Drawable?,
+            width: Int,
+            height: Int
         ) {
             target.wrapper = this
             var request = Glide.with(c)
-                    .`as`(BitmapDrawable::class.java)
-                    .load(model)
-                    .set(DrawableLoaderModule.scaleType, scaleType)
-                    .set(DrawableLoaderModule.cornerRadius, CornerRadius(
-                            leftTopRadius,
-                            rightTopRadius,
-                            rightBottomRadius,
-                            leftBottomRadius
-                    ))
+                .`as`(BitmapDrawable::class.java)
+                .load(model)
+                .set(DrawableLoaderModule.scaleType, scaleType)
+                .placeholder(placeHolder)
+                .set(
+                    DrawableLoaderModule.cornerRadius, CornerRadius(
+                        leftTopRadius,
+                        rightTopRadius,
+                        rightBottomRadius,
+                        leftBottomRadius
+                    )
+                )
             request = if (blurSampling > 1) {
                 val w = (width / blurSampling).toInt()
                 val h = (height / blurSampling).toInt()
