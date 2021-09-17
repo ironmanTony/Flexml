@@ -71,7 +71,7 @@
                             borderLeftBottomRadius="${(index*3)==(images.size()-3)?10:0}"
                             width="105"
                             height="105"
-                            src="${images[index*3]}">
+                            src="https://s3.forcloudcdn.com/item/images/dmc/24ca0e4c-3343-4652-a1b3-4e4fef8913de-500x500.gif">
                         </Image>
                         <Image
                             marginRight="2"
