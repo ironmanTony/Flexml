@@ -44,9 +44,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     //implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt "com.github.bumptech.glide:compiler:4.12.0"
 
     //implementation 'com.yqritc:android-scalablevideoview:1.0.4'
 
@@ -54,12 +55,10 @@ dependencies {
     implementation 'com.facebook.yoga:proguard-annotations:1.16.0'
     api "com.facebook.litho:litho-core:${lithoVersion}"
     api "com.facebook.litho:litho-widget:${lithoVersion}"
+    kapt "com.facebook.litho:litho-processor:${lithoVersion}"
     implementation 'com.facebook.soloader:soloader:0.9.0'
 
     api project(':core')
-
-    kapt "com.facebook.litho:litho-processor:${lithoVersion}"
-    kapt "com.github.bumptech.glide:compiler:4.11.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
