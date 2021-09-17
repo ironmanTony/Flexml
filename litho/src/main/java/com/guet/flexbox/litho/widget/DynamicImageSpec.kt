@@ -2,7 +2,6 @@ package com.guet.flexbox.litho.widget
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.transition.Transition
@@ -92,7 +91,7 @@ object DynamicImageSpec {
                 model,
                 blurRadius,
                 blurSampling,
-                if(scaleType==null)ScaleType.FIT_XY else scaleType,
+            scaleType ?: ScaleType.FIT_XY,
                 leftTopRadius,
                 rightTopRadius,
                 rightBottomRadius,

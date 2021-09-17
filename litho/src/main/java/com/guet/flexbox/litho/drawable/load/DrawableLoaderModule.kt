@@ -10,8 +10,6 @@ import com.bumptech.glide.load.Option
 import com.bumptech.glide.module.LibraryGlideModule
 import com.guet.flexbox.build.BuildKit
 import com.guet.flexbox.litho.drawable.BitmapDrawable
-import java.io.File
-import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -39,7 +37,8 @@ class DrawableLoaderModule : LibraryGlideModule() {
             registry.register(Bitmap::class.java,
                     BitmapDrawable::class.java,
                     BitmapDrawableTranscoder()
-            ).prepend(File::class.java, ByteBuffer::class.java, FileBufferLoader.Factory())
+            )
+//                .prepend(File::class.java, ByteBuffer::class.java, FileBufferLoader.Factory())
         }
 
         override fun init(c: Context) {
